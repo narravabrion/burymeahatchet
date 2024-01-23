@@ -11,7 +11,7 @@ pipeline {
         }
         // create virtual environment
         stage('Create Virtual Environment'){
-            script{
+            steps{
                 sh 'python3 -m venv venv'
                 sh 'source venv/bin/activate'
                 sh 'pip install -r requirements.txt'
@@ -21,7 +21,7 @@ pipeline {
         stage('Run Test'){
             parallel{
                 stage('Lint Test'){
-                    script{
+                    steps{
                         try{
                             sh 'pre-commit run --all-files --output-format=json:lint.json,colorized'
                         }
@@ -31,7 +31,7 @@ pipeline {
                     }
                 }
                 stage('Unit Test'){
-                    script{
+                    steps{
 
                         try{
                             sh 'pytest -v --junitxml=test-results.xml'
@@ -42,7 +42,7 @@ pipeline {
                     }
                 }
                 stage('coverage'){
-                    script{
+                    steps{
                         try{
                             sh 'coverage run -m pytest'
                             sh 'coverage xml'
@@ -65,7 +65,7 @@ pipeline {
             // archiveArtifacts artifacts: 'test-results.xml', fingerprint: true
             // archiveArtifacts artifacts: 'htmlcov', fingerprint: true
             // archiveArtifacts artifacts: 'coverage.xml', fingerprint: true
-            script{
+            steps{
                 try{
                     sh 'deactivate'
                     sh 'rm -rf venv'
