@@ -1,8 +1,12 @@
 pipeline {
     agent any
     stages{
+        stage('clean workspace'){
+            steps{
+                cleanWs()
+            }
+        }
         stage('Clone Repository'){
-            cleanWs()
             final scmVars = checkout(scm)
             env.BRANCH_NAME = scmVars.GIT_BRANCH
             env.GIT_COMMIT = "${scmVars.GIT_COMMIT[0..7]}"
