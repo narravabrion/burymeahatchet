@@ -4,6 +4,7 @@ certifi==2023.7.22
 cfgv==3.3.1
 charset-normalizer==3.2.0
 click==8.1.6
+coverage==7.4.0
 distlib==0.3.7
 Django==4.2.3
 django-cors-headers==4.2.0
@@ -13,6 +14,7 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 djangorestframework-stubs==3.14.2
 drf-yasg==1.21.7
+exceptiongroup==1.2.0
 Faker==19.2.0
 filelock==3.12.2
 flake8==6.0.0
@@ -44,6 +46,7 @@ PyYAML==6.0.1
 requests==2.31.0
 six==1.16.0
 sqlparse==0.4.4
+tomli==2.0.1
 typed-ast==1.5.5
 types-pytz==2023.3.0.0
 types-PyYAML==6.0.12.11
