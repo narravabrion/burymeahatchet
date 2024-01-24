@@ -37,6 +37,7 @@ pipeline {
                     steps {
                         script {
                             try {
+                                sh 'pre-commit install'
                                 sh 'pre-commit run --all-files --output-format=json:lint.json,colorized'
                             }
                         catch (Error|Exception err) {
