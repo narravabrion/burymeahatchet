@@ -37,6 +37,7 @@ pipeline {
                     steps {
                         script {
                             try {
+                                sh '. venv/bin/activate'
                                 sh 'pre-commit install'
                                 sh 'pre-commit run --all-files --output-format=json:lint.json,colorized'
                             }
@@ -50,6 +51,7 @@ pipeline {
                     steps {
                         script {
                             try {
+                                sh '. venv/bin/activate'
                                 sh 'pytest -v --junitxml=test-results.xml'
                             }
                             catch (Error|Exception err) {
@@ -62,6 +64,7 @@ pipeline {
                     steps {
                         script {
                             try {
+                                sh '. venv/bin/activate'
                                 sh 'coverage run -m pytest'
                                 sh 'coverage xml'
                             }
