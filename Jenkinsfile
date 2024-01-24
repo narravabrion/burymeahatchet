@@ -11,6 +11,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
+
                     scmVars = checkout(scm)
                     env.BRANCH_NAME = scmVars.GIT_BRANCH
                     env.GIT_COMMIT = "${scmVars.GIT_COMMIT[0..7]}"
@@ -24,7 +25,7 @@ pipeline {
             steps {
                 script {
                     sh 'python3 -m venv venv'
-                    sh 'source venv/bin/activate'
+                    sh '. venv/bin/activate'
                     sh 'pip install -r requirements.txt'
                 }
             }
