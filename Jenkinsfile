@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     sh 'python3 -m venv venv'
-                    sh 'source venv/bin/activate'
+                    sh '. venv/bin/activate'
                     sh 'venv/bin/pip3 install -r requirements.txt'
                 }
             }
@@ -37,9 +37,9 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh 'source venv/bin/activate'
+                                sh 'pwd'
                                 sh 'pre-commit install'
-                                sh 'pre-commit run --all-files --output-format=json:lint.json,colorized'
+                                sh 'venv/bin/python3 pre-commit run --all-files --output-format=json:lint.json,colorized'
                             }
                         catch (Error|Exception err) {
                                 echo err
@@ -52,7 +52,6 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh 'pwd'
                                 sh 'venv/bin/python3 pytest -v --junitxml=test-results.xml'
                             }
                             catch (Error|Exception err) {
@@ -66,7 +65,6 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh 'pwd'
                                 sh 'venv/bin/python3 coverage run -m pytest'
                                 sh 'venv/bin/python3 coverage xml'
                             }
