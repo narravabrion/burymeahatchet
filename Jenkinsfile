@@ -39,7 +39,7 @@ pipeline {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
                                 // sh 'pre-commit install'
-                                sh 'env/bin/python3.10 pre-commit run --all-files --output-format=json:lint.json,colorized'
+                                sh 'venv/bin/python3.10 pre-commit run --all-files --output-format=json:lint.json,colorized'
                             }
                         catch (Error|Exception err) {
                                 echo err
@@ -52,7 +52,7 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh 'env/bin/python3.10 pytest -v --junitxml=test-results.xml'
+                                sh 'venv/bin/python3.10 pytest -v --junitxml=test-results.xml'
                             }
                             catch (Error|Exception err) {
                                 echo err
@@ -65,8 +65,8 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh 'env/bin/python3.10 coverage run -m pytest'
-                                sh 'env/bin/python3.10 coverage xml'
+                                sh 'venv/bin/python3.10 coverage run -m pytest'
+                                sh 'venv/bin/python3.10 coverage xml'
                             }
                             catch (Error|Exception err) {
                                 echo err
