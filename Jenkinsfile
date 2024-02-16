@@ -38,7 +38,7 @@ pipeline {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
                                 sh 'pwd'
-                                sh 'pre-commit install'
+                                sh 'venv/bin/python3 pre-commit install'
                                 sh 'venv/bin/python3 pre-commit run --all-files --output-format=json:lint.json,colorized'
                             }
                         catch (Error|Exception err) {
@@ -52,6 +52,7 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
+                                sh 'cd /var/lib/jenkins/workspace/burymeahatchet_develop && mkdir pytest'
                                 sh 'venv/bin/python3 pytest -v --junitxml=test-results.xml'
                             }
                             catch (Error|Exception err) {
