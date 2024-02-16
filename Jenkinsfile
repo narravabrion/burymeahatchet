@@ -38,7 +38,7 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                // sh 'pre-commit install'
+                                sh 'venv/bin/python3.10 pre-commit install'
                                 sh 'venv/bin/python3.10 pre-commit run --all-files --output-format=json:lint.json,colorized'
                             }
                         catch (Error|Exception err) {
