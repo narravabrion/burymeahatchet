@@ -37,7 +37,7 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                echo ${env.WORKSPACE}
+                                echo "Workspace directory is: $env.WORKSPACE"
                                 sh 'venv/bin/python3 git config --unset-all core.hooksPath'
                                 sh 'venv/bin/python3 /var/lib/jenkins/workspace/burymeahatchet_develop/venv/bin/pre-commit install'
                                 // sh '. venv/bin/activate && which pre-commit'
