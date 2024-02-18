@@ -41,7 +41,8 @@ pipeline {
                                 // sh "venv/bin/python3 git config --unset-all core.hooksPath"
                                 // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit install"
                                 // sh ". venv/bin/activate && which pre-commit"
-                                sh "venv/bin/python3 pre-commit run --all-files --output-format=json:lint.json,colorized"
+                                // sh "venv/bin/python3 pre-commit run --all-files --output-format=json:lint.json,colorized"
+                                sh "venv/bin/python3 pre-commit run --all-files"
                             }
                         catch (Error|Exception err) {
                                 echo err
