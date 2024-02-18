@@ -2,47 +2,46 @@ pipeline {
     agent any
 
     stages {
-        stage('clean workspace') {
+        stage("clean workspace") {
             steps {
                 cleanWs()
             }
         }
 
-        stage('Clone Repository') {
+        stage("Clone Repository") {
             steps {
                 script {
                     scmVars = checkout(scm)
                     env.BRANCH_NAME = scmVars.GIT_BRANCH
                     env.GIT_COMMIT = "${scmVars.GIT_COMMIT[0..7]}"
-                    env.GIT_REPO_NAME = scmVars.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, '$1')
+                    env.GIT_REPO_NAME = scmVars.GIT_URL.replaceFirst(/^.*\/([^\/]+?).git$/, "$1")
                     GIT_REPO_NAME = env.GIT_REPO_NAME
                 }
             }
         }
 
-        stage('Create Virtual Environment') {
+        stage("Create Virtual Environment") {
             steps {
                 script {
-                    sh 'python3 -m venv venv'
-                    sh '. venv/bin/activate'
-                    sh 'venv/bin/pip3 install -r requirements.txt'
+                    sh "python3 -m venv venv"
+                    sh ". venv/bin/activate"
+                    sh "venv/bin/pip3 install -r requirements.txt"
                 }
             }
         }
 
-        stage('Run Test') {
+        stage("Run Test") {
             parallel {
-                stage('Lint Test') {
+                stage("Lint Test") {
                     steps {
                         script {
                             try {
-                                // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                echo "Workspace directory is: $env.WORKSPACE"
-                                sh 'venv/bin/python3 git config --unset-all core.hooksPath'
-                                sh 'venv/bin/python3 /var/lib/jenkins/workspace/burymeahatchet_develop/venv/bin/pre-commit install'
-                                // sh '. venv/bin/activate && which pre-commit'
-                                sh 'pip3 list'
-                                sh 'venv/bin/python3 pre-commit run --all-files --output-format=json:lint.json,colorized'
+                                // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
+
+                                // sh "venv/bin/python3 git config --unset-all core.hooksPath"
+                                // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit install"
+                                // sh ". venv/bin/activate && which pre-commit"
+                                sh "venv/bin/python3 pre-commit run --all-files --output-format=json:lint.json,colorized"
                             }
                         catch (Error|Exception err) {
                                 echo err
@@ -50,12 +49,12 @@ pipeline {
                         }
                     }
                 }
-                stage('Unit Test') {
+                stage("Unit Test") {
                     steps {
                         script {
                             try {
-                                // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh 'venv/bin/python3 pytest -v --junitxml=test-results.xml'
+                                // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
+                                sh "venv/bin/python3 pytest -v --junitxml=test-results.xml"
                             }
                             catch (Error|Exception err) {
                                 echo err
@@ -63,13 +62,13 @@ pipeline {
                         }
                     }
                 }
-                stage('coverage') {
+                stage("coverage") {
                     steps {
                         script {
                             try {
-                                // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh 'venv/bin/python3 coverage run -m pytest'
-                                sh 'venv/bin/python3 coverage xml'
+                                // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
+                                sh "venv/bin/python3 coverage run -m pytest"
+                                sh "venv/bin/python3 coverage xml"
                             }
                             catch (Error|Exception err) {
                                 echo err
@@ -83,17 +82,17 @@ pipeline {
 
     post {
         always {
-            // junit 'test-results.xml'
-            // publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'htmlcov', reportFiles: 'index.html', reportName: 'Code Coverage Report'])
-            // publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: '.', reportFiles: 'lint.json', reportName: 'Lint Report'])
-            // archiveArtifacts artifacts: 'lint.json', fingerprint: true
-            // archiveArtifacts artifacts: 'test-results.xml', fingerprint: true
-            // archiveArtifacts artifacts: 'htmlcov', fingerprint: true
-            // archiveArtifacts artifacts: 'coverage.xml', fingerprint: true
+            // junit "test-results.xml"
+            // publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: "htmlcov", reportFiles: "index.html", reportName: "Code Coverage Report"])
+            // publishHTML([allowMissing: false, alwaysLinkToLastBuild: true, keepAll: true, reportDir: ".", reportFiles: "lint.json", reportName: "Lint Report"])
+            // archiveArtifacts artifacts: "lint.json", fingerprint: true
+            // archiveArtifacts artifacts: "test-results.xml", fingerprint: true
+            // archiveArtifacts artifacts: "htmlcov", fingerprint: true
+            // archiveArtifacts artifacts: "coverage.xml", fingerprint: true
             script {
                 try {
-                    sh 'deactivate'
-                    sh 'rm -rf venv'
+                    sh "deactivate"
+                    sh "rm -rf venv"
                 }
                 catch (Error|Exception err) {
                     echo err
