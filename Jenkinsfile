@@ -37,7 +37,7 @@ pipeline {
                         script {
                             try {
                                 // sh 'python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt'
-                                sh '. venv/bin/activate'
+                                sh '. venv/bin/activate && which pre-commit'
                                 sh 'pip3 list'
                                 sh 'venv/bin/python3 pre-commit run --all-files --output-format=json:lint.json,colorized'
                             }
