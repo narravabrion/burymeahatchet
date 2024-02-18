@@ -41,7 +41,8 @@ pipeline {
                                 // sh "venv/bin/python3 git config --unset-all core.hooksPath"
                                 // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit install"
                                 // sh ". venv/bin/activate && which pre-commit"
-                                sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files --output-format=json:lint.json,colorized"
+                                // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files --output-format=json:lint.json,colorized"
+                                sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files "
                             }
                         catch (Error|Exception err) {
                                 echo err
@@ -54,7 +55,8 @@ pipeline {
                         script {
                             try {
                                 // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
-                                sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pytest -v --junitxml=test-results.xml"
+                                // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pytest -v --junitxml=test-results.xml"
+                                sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pytest"
                             }
                             catch (Error|Exception err) {
                                 echo err
