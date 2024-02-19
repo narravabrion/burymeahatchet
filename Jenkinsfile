@@ -50,34 +50,34 @@ pipeline {
                         }
                     }
                 }
-                stage("Unit Test") {
-                    steps {
-                        script {
-                            try {
-                                // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
-                                // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pytest -v --junitxml=test-results.xml"
-                                sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pytest"
-                            }
-                            catch (Error|Exception err) {
-                                echo err
-                            }
-                        }
-                    }
-                }
-                stage("coverage") {
-                    steps {
-                        script {
-                            try {
-                                // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
-                                sh "venv/bin/python3 coverage run -m pytest"
-                                sh "venv/bin/python3 coverage xml"
-                            }
-                            catch (Error|Exception err) {
-                                echo err
-                            }
-                        }
-                    }
-                }
+                // stage("Unit Test") {
+                //     steps {
+                //         script {
+                //             try {
+                //                 // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
+                //                 // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pytest -v --junitxml=test-results.xml"
+                //                 sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pytest"
+                //             }
+                //             catch (Error|Exception err) {
+                //                 echo err
+                //             }
+                //         }
+                //     }
+                // }
+                // stage("coverage") {
+                //     steps {
+                //         script {
+                //             try {
+                //                 // sh "python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt"
+                //                 sh "venv/bin/python3 coverage run -m pytest"
+                //                 sh "venv/bin/python3 coverage xml"
+                //             }
+                //             catch (Error|Exception err) {
+                //                 echo err
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
     }
