@@ -42,7 +42,7 @@ pipeline {
                                 // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit install"
                                 // sh ". venv/bin/activate && which pre-commit"
                                 // sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files --output-format=json:lint.json,colorized"
-                                sh "venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files "
+                                sh ". venv/bin/activate && venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files "
                             }
                         catch (Error|Exception err) {
                                 echo err
