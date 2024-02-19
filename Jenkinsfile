@@ -46,7 +46,9 @@ pipeline {
                                 // sh 'venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit install'
                                 // sh '. venv/bin/activate && which pre-commit'
                                 // sh 'venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files --output-format=json:lint.json,colorized'
+                                sh 'cat /var/lib/jenkins/workspace/burymeahatchet_develop@tmp/durable-948baced/script.sh'
                                 sh ". venv/bin/activate && venv/bin/python3 $env.WORKSPACE/venv/bin/pre-commit run --all-files --env-var=$SECRET_KEY"
+                                sh 'cat /var/lib/jenkins/workspace/burymeahatchet_develop@tmp/durable-948baced/script.sh'
                             }
                         catch (Error|Exception err) {
                                 echo err
